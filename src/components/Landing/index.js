@@ -16,15 +16,34 @@ const Landing = () => {
 
   // Gère l'afficahge des boutons d et g.
   const [btn, setBtn] = useState(false);
+  
+  // Gère l'afficahge des griffes gauches lors du passage de la souris.
+  const setLeftImg = () => {
+    refWolverine.current.classList.add("leftImg");
+  }
+
+  // Gère l'affichage des griffes droites lors du passage de la souris.
+  const setRightImg = () => {
+    refWolverine.current.classList.add("rightImg");
+  }
+
+  // Efface l'image des griffes quand la souris ne survole plus la div.
+  const clearImg = () => {
+    if(refWolverine.current.classList.contains("leftImg")) {
+      refWolverine.current.classList.remove("leftImg")
+    } else if(refWolverine.current.classList.contains("rightImg")) {
+      refWolverine.current.classList.remove("rightImg")
+    }
+  }
 
   // Gère les conditions de l'afficahge des boutons.
   const displayBtn = btn && (
     <Fragment>
-      <div className='leftBox'>
+      <div className='leftBox' onMouseOver={setLeftImg} onMouseOut={clearImg}>
         <button className='btn-welcome'>Inscription</button>
       </div>
       <div className='rightBox'>
-        <button className='btn-welcome'>Connexion</button>
+        <button className='btn-welcome' onMouseOver={setRightImg} onMouseOut={clearImg}>Connexion</button>
       </div>
     </Fragment>
   )
