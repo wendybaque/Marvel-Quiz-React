@@ -36,7 +36,7 @@ const Landing = () => {
     }
   }
 
-  // Gère les conditions de l'afficahge des boutons.
+  // Gère les conditions de l'affichage des boutons.
   const displayBtn = btn && (
     <Fragment>
       <div className='leftBox' onMouseOver={setLeftImg} onMouseOut={clearImg}>
