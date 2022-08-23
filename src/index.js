@@ -4,12 +4,15 @@ import App from './components/App/index.js';
 import './App.css'
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
+import Firebase, {FirebaseContext} from './components/Firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <FirebaseContext.Provider value={new Firebase()}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </FirebaseContext.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

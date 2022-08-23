@@ -887,14 +887,3 @@ input:checked+.slider:before {
   }
 
 }
-
-/* React Leaflet */
-.leaflet-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  width:90vw;
-  height: 70vh;
-  border-radius: 10px;
-}
