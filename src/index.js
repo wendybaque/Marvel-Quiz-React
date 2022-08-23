@@ -8,11 +8,11 @@ import Firebase, {FirebaseContext} from './components/Firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <FirebaseContext.Provider value={new Firebase()}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </FirebaseContext.Provider>
+  <BrowserRouter>
+    <FirebaseContext.Provider value={new Firebase()}>
+        <App />
+    </FirebaseContext.Provider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

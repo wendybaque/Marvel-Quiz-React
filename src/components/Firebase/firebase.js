@@ -5,7 +5,6 @@
 
 // Firebase avec class :
 import app from 'firebase/app';
-// import du package d'authentification avec class :
 import 'firebase/auth';
 
 const config = {
@@ -25,22 +24,29 @@ const config = {
   // const analytics = getAnalytics(app);
 
 // Firebase avec class :
-  class Firebase {
-    constructor() {
-        app.initializeApp(config);
-        this.auth = app.auth();
-    }
-
-    // Méthode d'inscription :
-    signupUser = (email, password) => 
-        this.auth.createUserWithEmailAndPassword(email, password);
-    
-    // Méthode de conexion :
-    loginUser = (email, password) =>
-        this.auth.signInWithEmailAndPassword(email, password);
-
-    // Méthode de déconnexion :
-    signoutUser = () => this.auth.signOut();
+class Firebase {
+  constructor() {
+      app.initializeApp(config);
+      this.auth = app.auth();
+      // this.db = app.firestore()
   }
 
-  export default Firebase;
+  // Inscription
+  signupUser = (email, password) => 
+  this.auth.createUserWithEmailAndPassword(email, password);
+
+  // Connexion
+  loginUser = (email, password) => 
+  this.auth.signInWithEmailAndPassword(email, password);
+
+  // Déconnexion
+  signoutUser = () => this.auth.signOut();
+
+  // // Récupérer le mot de passe
+  // passwordReset = email => this.auth.sendPasswordResetEmail(email); 
+
+  // // Firestore
+  // user = uid => this.db.doc(`users/${uid}`);
+}
+
+export default Firebase;

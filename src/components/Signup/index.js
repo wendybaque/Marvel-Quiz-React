@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {FirebaseContext} from '../Firebase'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Signup = () => {
 
@@ -21,12 +22,14 @@ const Signup = () => {
     setLoginData({...loginData, [e.target.id]: e.target.value})
   }
 
+  // Appel de Firebase :
   const handleSubmit = (e) => {
     e.preventDefault();
     const {email, password} = loginData;
     firebase.signupUser(email, password)
     .then(user => {
       setLoginData({...data});
+      navigate('/welcome');
     })
     .catch(error => {
       setError(error);
@@ -43,6 +46,10 @@ const Signup = () => {
 
   // Gestion des erreurs :
   const errorMsg = error !== '' && <span>{error.message}</span>;
+
+
+  // Gestion de redirection :
+  const navigate = useNavigate();
 
   return (
     <div className='signUpLoginBox'>
@@ -77,6 +84,9 @@ const Signup = () => {
               {btn}
             </form>
 
+            <div className='linkContainer'>
+              <Link className='simpleLink' to="/login">Déjà inscrit ? Connecte-toi.</Link>
+            </div>
           </div>
         </div>
       </div>
