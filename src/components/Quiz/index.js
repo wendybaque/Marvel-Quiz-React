@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
 import { QuizMarvel } from '../QuizMarvel';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
+toast.configure();
 
 class Quiz extends Component {
 
@@ -15,7 +19,8 @@ class Quiz extends Component {
     idQuestion: 0,
     btnDisabled:true,
     userAnswer:null,
-    score: 0
+    score: 0,
+    showWelcomemsg: false
   }
 
   storedDatatRef = React.createRef();
@@ -33,17 +38,39 @@ class Quiz extends Component {
     }
   }
 
+  // Notification de bienvenue :
+  showWelcomeMsg = pseudo => {
+    if(!this.state.showWelcomemsg) {
+
+        this.setState({
+          showWelcomeMsg:true
+        })
+
+      toast.warn(`Bienvenue ${pseudo} et bonne chance ! 🍀`, {
+      position: "top-right",
+      autoClose:4000,
+      hideProgressBar:false,
+      pauseOnHover:true,
+      pauseOnClick:true,
+      draggable:false
+    });
+    }
+  }
+
   componentDidMount(){
     this.loadQuestions(this.state.levelNames[this.state.quizLevel]);
   }
 
   componentDidUpdate(provProps, prevState) {
+    // Affichage de la question :
     if(this.state.storedQuestions !== prevState.storedQuestions) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options
       })
     } 
+
+    // Passage à la question suivante :
     if(this.state.idQuestion !== prevState.idQuestion) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
@@ -51,6 +78,11 @@ class Quiz extends Component {
         userAnswer:null,
         btnDisabled:true
       })
+    }
+
+    // Invocation de la notification si le pseudo est bien reçu :
+    if(this.props.userData.pseudo) {
+      this.showWelcomeMsg(this.props.userData.pseudo)
     }
   }
 
