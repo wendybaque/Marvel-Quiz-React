@@ -41,8 +41,9 @@ const Login = () => {
   return (
     <div className='signUpLoginBox'>
       <div className='slContainer'>
-      <div className='formBoxLeftLogin'>
-      </div>
+
+      <div className='formBoxLeftLogin'></div>
+
         <div className='formBoxRight'>
           <div className='formContent'>
             {error !== '' && <span>{error.message}</span> }
@@ -63,7 +64,10 @@ const Login = () => {
 
             <div className='linkContainer'>
               <Link className='simpleLink' to="/signup">Nouveau sur Marvel Quiz ? Inscris-toi maintenant !</Link>
+              <br />
+              <Link className='simpleLink' to="/forgetpassword">Mot de passe oublié ? </Link>
             </div>
+
           </div>
         </div>
       </div>
