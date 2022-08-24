@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const Quiz = () => {
+const Quiz = (props) => {
   return (
     <div>
-      QUIZ
+      <h2>Pseudo : {props.userData.pseudo}</h2>
     </div>
   )
 }
