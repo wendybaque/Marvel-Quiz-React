@@ -12,12 +12,18 @@ class Quiz extends Component {
     storedQuestions:[],
     question: null,
     options:[],
-    idQuestion: 0
+    idQuestion: 0,
+    btnDisabled:true,
+    userAnswer:null,
+    score: 0
   }
+
+  storedDatatRef = React.createRef();
 
   loadQuestions = quizz => {
     const fetchedArrayQuiz = QuizMarvel[0].quizz[quizz];
     if(fetchedArrayQuiz.length >= this.state.maxQuestions) {
+      this.storedDatatRef.current = fetchedArrayQuiz;
       const newArray = fetchedArrayQuiz.map(({answer, ...keepRest}) => keepRest);
       this.setState({
         storedQuestions:newArray
@@ -37,8 +43,42 @@ class Quiz extends Component {
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options
       })
-    } else {
+    } 
+    if(this.state.idQuestion !== prevState.idQuestion) {
+      this.setState({
+        question: this.state.storedQuestions[this.state.idQuestion].question,
+        options: this.state.storedQuestions[this.state.idQuestion].options,
+        userAnswer:null,
+        btnDisabled:true
+      })
+    }
+  }
 
+  // Sauvegarder la réponse de l'utilisateur :
+  submitAnswer = (selectedAnswer) => {
+    this.setState({
+      userAnswer:selectedAnswer,
+      btnDisabled:false
+    })
+  }
+
+  // Passage à laquestion suivante :
+  nextQuestion = () => {
+    if(this.state.idQuestion === this.state.maxQuestions - 1){
+
+    } else {
+      // Incrémentation du compteur de score :
+      this.setState((prevState) => ({
+        idQuestion:prevState.idQuestion + 1
+      }))
+    }
+
+    // Augmenter le score si on n'est pas à la dernière question + réponse correcte :
+    const goodAnswer = this.storedDatatRef.current[this.state.idQuestion].answer;
+    if(this.state.userAnswer === goodAnswer) {
+      this.setState((prevState) => ({
+        score: prevState.score + 1
+      }))
     }
   }
 
@@ -48,7 +88,10 @@ class Quiz extends Component {
 
     const displayOptions = this.state.options.map((option, index) => {
       return(
-        <p key={index} className='answerOptions'>{option}</p>
+        <p key={index}
+        onClick={() => this.submitAnswer(option)} 
+        className={`answerOptions ${this.state.userAnswer === option ? "selected" : null}`}
+      >{option}</p>
       )
     })
 
@@ -59,7 +102,11 @@ class Quiz extends Component {
       <ProgressBar />
       <h2>{this.state.question}</h2>
         {displayOptions}
-      <button className='btnSubmit'>Suivant</button>
+      <button 
+      disabled={this.state.btnDisabled} 
+      className='btnSubmit'
+      onClick={this.nextQuestion}>Suivant
+      </button>
     </div>
   )
   }
