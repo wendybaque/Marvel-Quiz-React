@@ -25,9 +25,16 @@ const Signup = () => {
   // Appel de Firebase :
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {email, password} = loginData;
+    const {email, password, pseudo} = loginData;
     firebase.signupUser(email, password)
-    .then(user => {
+    .then((authUser) => {
+      return(firebase.user(authUser.user.uid).set({
+        pseudo: pseudo,
+        email: email
+      })
+      )
+    })
+    .then(() => {
       setLoginData({...data});
       navigate('/welcome');
     })
