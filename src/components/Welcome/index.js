@@ -29,9 +29,7 @@ const Welcome = (props) => {
           setUserData(myData)
         }
       })
-      .catch((error) => {
-
-      })
+      .catch((error) => {})
     }
 
     return () => {

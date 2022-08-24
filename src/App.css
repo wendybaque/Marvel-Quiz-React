@@ -441,6 +441,8 @@ button[disabled]:hover {
   background-color: var(--light-grey-color);
   -webkit-transition: .4s;
   transition: .4s;
+  box-shadow: 2px 2px 5px var(--black-color);
+
 }
 
 .slider:before {
@@ -467,10 +469,13 @@ input:checked+.slider:before {
 
 .slider.round {
   border-radius: 34px;
+  
 }
 
 .slider.round:before {
   border-radius: 50%;
+  box-shadow: 2px 2px 5px var(--black-color);
+
 }
 /* END LOGOUT SWITCH */
 
@@ -500,6 +505,7 @@ input:checked+.slider:before {
   flex: 0 1 40%;
   padding: 8px 0;
   border-radius: 6px;
+  box-shadow: 2px 2px 5px var(--black-color);
 }
 
 .progressBar {
@@ -512,6 +518,7 @@ input:checked+.slider:before {
   flex-direction: column;
   justify-content: center;
   padding: 0 6px;
+  box-shadow: 2px 2px 5px var(--black-color);
 }
 
 .progressBarChange {
