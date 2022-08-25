@@ -25,5 +25,6 @@ const ProgressBar = ({idQuestion, maxQuestions}) => {
     </Fragment>
   )
 }
+
 // Le memo fait que la fonction ne s'enclenche qu'une seule fois (optimisation) :
 export default React.memo(ProgressBar);

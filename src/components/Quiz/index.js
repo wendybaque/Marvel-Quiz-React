@@ -155,7 +155,7 @@ class Quiz extends Component {
       )
     })
 
-    return this.state.quizEnd ? (<QuizOver />) :(
+    return this.state.quizEnd ? (<QuizOver ref={this.storedDatatRef}/>) :(
       <Fragment>
         <h2>Pseudo : {pseudo}</h2>
         <Levels />

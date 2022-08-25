@@ -41,7 +41,6 @@ const Welcome = (props) => {
   return userSession === null ? (
     <Fragment>
       <div className='loader'></div>
-      <p>Loading...</p>
     </Fragment>
   ) : (
     <div className='quiz-bg'>
