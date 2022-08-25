@@ -10,22 +10,28 @@ toast.configure();
 
 class Quiz extends Component {
 
-  state = {
-    levelNames: ["debutant", "confirme", "expert"],
-    quizLevel:0,
-    maxQuestions:10,
-    storedQuestions:[],
-    question: null,
-    options:[],
-    idQuestion: 0,
-    btnDisabled:true,
-    userAnswer:null,
-    score: 0,
-    showWelcomeMsg: false,
-    quizEnd: false
-  }
+  // Création d'un constructor pour ne pas avoir à recopier tous les éléments du state :
+  constructor(props) {
+    super(props)
 
-  storedDatatRef = React.createRef();
+    this.initialState = {
+      levelNames: ["debutant", "confirme", "expert"],
+      quizLevel:0,
+      maxQuestions:10,
+      storedQuestions:[],
+      question: null,
+      options:[],
+      idQuestion: 0,
+      btnDisabled:true,
+      userAnswer:null,
+      score: 0,
+      showWelcomeMsg: false,
+      quizEnd: false
+    }
+  
+    this.state = this.initialState;
+    this.storedDatatRef = React.createRef();
+  }
 
   loadQuestions = quizz => {
     const fetchedArrayQuiz = QuizMarvel[0].quizz[quizz];
@@ -41,7 +47,7 @@ class Quiz extends Component {
   }
 
   // Notification de bienvenue :
-  showWelcomeMsg = pseudo => {
+  showToastMsg = pseudo => {
     if(!this.state.showWelcomeMsg) {
 
       this.setState({
@@ -63,17 +69,15 @@ class Quiz extends Component {
     this.loadQuestions(this.state.levelNames[this.state.quizLevel]);
   }
 
-  componentDidUpdate(provProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     // Affichage de la question :
-    if(this.state.storedQuestions !== prevState.storedQuestions) {
+    if((this.state.storedQuestions !== prevState.storedQuestions) && this.state.storedQuestions.length) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options
       })
     } 
-
-    // Passage à la question suivante :
-    if(this.state.idQuestion !== prevState.idQuestion) {
+    if((this.state.idQuestion !== prevState.idQuestion) && this.state.storedQuestions.length) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options,
@@ -82,9 +86,15 @@ class Quiz extends Component {
       })
     }
 
-    // Invocation de la notification si le pseudo est bien reçu :
-    if(this.props.userData.pseudo) {
-      this.showWelcomeMsg(this.props.userData.pseudo)
+    // Correction du bug d'affichage du score en prenant en compte prevState :
+    if(this.state.quizEnd !== prevState.quizEnd) {
+      const gradePercent = this.getPercentage(this.state.maxQuestions, this.state.score);
+      this.gameOver(gradePercent);
+    }
+
+    // Invocation de la notification si le pseudo est bien reçu, seulement au moment du montage :
+    if(this.props.userData.pseudo !== prevProps.userData.pseudo) {
+      this.showToastMsg(this.props.userData.pseudo)
     }
   }
 
@@ -99,7 +109,9 @@ class Quiz extends Component {
   // Passage à la question suivante ou fin du niveau sur lequel on se trouve :
   nextQuestion = () => {
     if(this.state.idQuestion === this.state.maxQuestions - 1){
-      this.gameOver();
+      this.setState({
+        quizEnd:true
+      })
     } else {
       // Incrémentation du compteur de score :
       this.setState((prevState) => ({
@@ -135,27 +147,27 @@ class Quiz extends Component {
     }
   }
 
-  // Obtention du poucentage de réussite à la fin du niveau :
   getPercentage = (maxQuest, ourScore) => (ourScore / maxQuest) * 100;
 
   // Fin du jeu -> passage à un autre composant :
-  gameOver = () => {
-    const gradePercent = this.getPercentage(this.state.maxQuestions, this.state.score);
+  gameOver = percent => {
     
     // Si la note est sup à 50%, on a gagné + passage au niveau suivant :
-    if(gradePercent >= 50) {
+    if(percent >= 50) {
       this.setState({
         quizLevel: this.state.quizLevel + 1,
-        percent:gradePercent,
-        quizEnd:true
+        percent
       })
     // Si la note est inf à 50%, on a perdu :
     } else {
-      this.setState({
-        percent:gradePercent,
-        quizEnd:true
-      })
+      this.setState({percent})
     }
+  }
+
+  // Chargement des questions suivantes 
+  loadLevelQuestions = (param) => {
+    this.setState({...this.initialState, quizLevel:param})
+    this.loadQuestions(this.state.levelNames[param]);
   }
 
   render() {
@@ -180,6 +192,7 @@ class Quiz extends Component {
       maxQuestions={this.state.maxQuestions}
       quizLevel={this.state.quizLevel}
       percent={this.state.percent}
+      loadLevelQuestions={this.loadLevelQuestions}
     />) :(
       
       <Fragment>

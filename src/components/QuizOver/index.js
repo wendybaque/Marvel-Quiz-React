@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 const QuizOver = React.forwardRef((props, ref) => {
 
-  const {levelNames, score, maxQuestions, quizLevel, percent} = props; 
+  const {levelNames, score, maxQuestions, quizLevel, percent, loadLevelQuestions} = props; 
   
   const [asked, setAsked] = useState([]);
 
@@ -13,6 +13,13 @@ const QuizOver = React.forwardRef((props, ref) => {
   // Note moyenne obtenue aux questions :
   const averageGrade = maxQuestions / 2;
 
+  // Gestion du cas où on n'a pas la moyenne (redirection vers le niveau précédent) :
+  if(score < averageGrade) {
+    setTimeout(() => {
+      loadLevelQuestions(quizLevel)
+    }, 4000);
+  } 
+
   // Décision à prendre en fonction de la note obtenue :
   const decision = score >= averageGrade  ? (
     <Fragment>
@@ -22,13 +29,13 @@ const QuizOver = React.forwardRef((props, ref) => {
             // Condition 1 : On a la moyenne et il reste des niveaux à faire :
           <Fragment>
             <p className='successMsg'>Bravo, passez au niveau suivant ! 👏</p>
-            <button className='btnResult success'>Niveau suivant...</button>
+            <button onClick={() => loadLevelQuestions(quizLevel)} className='btnResult success'>Niveau suivant...</button>
           </Fragment>
           ) : (
             // Condition 2 : On  a la moyenne et on a terminé tous les niveaux :
           <Fragment>
             <p className='successMsg'>Bravo, vous êtes un expert ! 🏆🏅</p>
-            <button className='btnResult gameOver'>Niveau suivant...</button>
+            <button onClick={() => loadLevelQuestions(0)} className='btnResult gameOver'>Accueil</button>
           </Fragment>
           )
         }
@@ -66,7 +73,8 @@ const QuizOver = React.forwardRef((props, ref) => {
  ) : (
   <tr>  
     <td colSpan={3}>
-      <p style={{textAlign:'center', color:'red'}}>On ne va pas te filer les réponses tout de suite, quand même ! 😜</p>
+      <div className='loader'></div>
+      <p style={{textAlign:'center', color:'red'}}>On ne va pas te filer les bonnes réponses tout de suite, quand même ! 😜 <br/> Tu refais le niveau ? </p>
     </td>
   </tr>
  )
