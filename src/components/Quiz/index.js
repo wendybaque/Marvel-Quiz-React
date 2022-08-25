@@ -20,7 +20,7 @@ class Quiz extends Component {
     btnDisabled:true,
     userAnswer:null,
     score: 0,
-    showWelcomemsg: false
+    showWelcomeMsg: false
   }
 
   storedDatatRef = React.createRef();
@@ -40,20 +40,20 @@ class Quiz extends Component {
 
   // Notification de bienvenue :
   showWelcomeMsg = pseudo => {
-    if(!this.state.showWelcomemsg) {
+    if(!this.state.showWelcomeMsg) {
 
-        this.setState({
-          showWelcomeMsg:true
-        })
+      this.setState({
+        showWelcomeMsg:true
+      })
 
       toast.warn(`Bienvenue ${pseudo} et bonne chance ! 🍀`, {
-      position: "top-right",
-      autoClose:4000,
-      hideProgressBar:false,
-      pauseOnHover:true,
-      pauseOnClick:true,
-      draggable:false
-    });
+            position: "top-right",
+            autoClose:3000,
+            hideProgressBar:false,
+            pauseOnHover:true,
+            pauseOnClick:true,
+            draggable:false
+          });
     }
   }
 
@@ -111,6 +111,25 @@ class Quiz extends Component {
       this.setState((prevState) => ({
         score: prevState.score + 1
       }))
+
+      // Affichage de la notification d'échec ou de réussite :
+      toast.success('Bravo, + 1 ! ✅', {
+        position: "top-right",
+        autoClose:2000,
+        hideProgressBar:false,
+        pauseOnHover:true,
+        pauseOnClick:true,
+        draggable:false
+      });
+    } else {
+      toast.error('Oups... 😉', {
+        position: "top-right",
+        autoClose:2000,
+        hideProgressBar:false,
+        pauseOnHover:true,
+        pauseOnClick:true,
+        draggable:false
+      });
     }
   }
 
@@ -135,9 +154,9 @@ class Quiz extends Component {
       <h2>{this.state.question}</h2>
         {displayOptions}
       <button 
-      disabled={this.state.btnDisabled} 
-      className='btnSubmit'
-      onClick={this.nextQuestion}>Suivant
+        disabled={this.state.btnDisabled} 
+        className='btnSubmit'
+        onClick={this.nextQuestion}>Suivant
       </button>
     </div>
   )
