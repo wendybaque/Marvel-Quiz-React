@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
+import QuizOver from '../QuizOver';
 import { QuizMarvel } from '../QuizMarvel';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -20,7 +21,8 @@ class Quiz extends Component {
     btnDisabled:true,
     userAnswer:null,
     score: 0,
-    showWelcomeMsg: false
+    showWelcomeMsg: false,
+    quizEnd: false
   }
 
   storedDatatRef = React.createRef();
@@ -94,10 +96,10 @@ class Quiz extends Component {
     })
   }
 
-  // Passage à laquestion suivante :
+  // Passage à la question suivante ou fin du jeu :
   nextQuestion = () => {
     if(this.state.idQuestion === this.state.maxQuestions - 1){
-
+      this.gameOver();
     } else {
       // Incrémentation du compteur de score :
       this.setState((prevState) => ({
@@ -133,6 +135,13 @@ class Quiz extends Component {
     }
   }
 
+  // Fin du jeu -> passage à un autre composant :
+  gameOver = () => {
+    this.setState({
+      quizEnd:true
+    })
+  }
+
   render() {
 
     const {pseudo} = this.props.userData;
@@ -146,20 +155,20 @@ class Quiz extends Component {
       )
     })
 
-  return (
-    <div>
-      <h2>Pseudo : {pseudo}</h2>
-      <Levels />
-      <ProgressBar />
-      <h2>{this.state.question}</h2>
-        {displayOptions}
-      <button 
-        disabled={this.state.btnDisabled} 
-        className='btnSubmit'
-        onClick={this.nextQuestion}>Suivant
-      </button>
-    </div>
-  )
+    return this.state.quizEnd ? (<QuizOver />) :(
+      <Fragment>
+        <h2>Pseudo : {pseudo}</h2>
+        <Levels />
+        <ProgressBar />
+        <h2>{this.state.question}</h2>
+          {displayOptions}
+        <button 
+          disabled={this.state.btnDisabled} 
+          className='btnSubmit'
+          onClick={this.nextQuestion}>Suivant
+        </button>
+    </Fragment>
+    );
   }
 }
 
