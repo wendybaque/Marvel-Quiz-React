@@ -442,7 +442,6 @@ button[disabled]:hover {
   -webkit-transition: .4s;
   transition: .4s;
   box-shadow: 2px 2px 5px var(--black-color);
-
 }
 
 .slider:before {
@@ -474,8 +473,7 @@ input:checked+.slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-  box-shadow: 2px 2px 5px var(--black-color);
-
+  border: 0.1px solid var(--dark-grey-color);
 }
 /* END LOGOUT SWITCH */
 

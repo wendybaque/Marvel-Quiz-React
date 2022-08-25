@@ -96,7 +96,7 @@ class Quiz extends Component {
     })
   }
 
-  // Passage à la question suivante ou fin du jeu :
+  // Passage à la question suivante ou fin du niveau sur lequel on se trouve :
   nextQuestion = () => {
     if(this.state.idQuestion === this.state.maxQuestions - 1){
       this.gameOver();
@@ -135,11 +135,27 @@ class Quiz extends Component {
     }
   }
 
+  // Obtention du poucentage de réussite à la fin du niveau :
+  getPercentage = (maxQuest, ourScore) => (ourScore / maxQuest) * 100;
+
   // Fin du jeu -> passage à un autre composant :
   gameOver = () => {
-    this.setState({
-      quizEnd:true
-    })
+    const gradePercent = this.getPercentage(this.state.maxQuestions, this.state.score);
+    
+    // Si la note est sup à 50%, on a gagné + passage au niveau suivant :
+    if(gradePercent >= 50) {
+      this.setState({
+        quizLevel: this.state.quizLevel + 1,
+        percent:gradePercent,
+        quizEnd:true
+      })
+    // Si la note est inf à 50%, on a perdu :
+    } else {
+      this.setState({
+        percent:gradePercent,
+        quizEnd:true
+      })
+    }
   }
 
   render() {
@@ -155,7 +171,17 @@ class Quiz extends Component {
       )
     })
 
-    return this.state.quizEnd ? (<QuizOver ref={this.storedDatatRef}/>) :(
+    return this.state.quizEnd ? 
+
+    (<QuizOver 
+      ref={this.storedDatatRef}
+      levelNames={this.state.levelNames}
+      score={this.state.score}
+      maxQuestions={this.state.maxQuestions}
+      quizLevel={this.state.quizLevel}
+      percent={this.state.percent}
+    />) :(
+      
       <Fragment>
         <h2>Pseudo : {pseudo}</h2>
         <Levels />
