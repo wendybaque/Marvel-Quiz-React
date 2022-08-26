@@ -12,6 +12,12 @@ const QuizOver = React.forwardRef((props, ref) => {
 
   const {levelNames, score, maxQuestions, quizLevel, percent, loadLevelQuestions} = props; 
   
+  // Récupération de la clé API :
+  const API_PUBLIC_KEY = process.env.REACT_APP_MARVEL_API_KEY
+  console.log(API_PUBLIC_KEY)
+  // Récupération du hash :
+  const hash = '2db2ee218c7dd2c6034acd250726a3f4';
+
   // State de la question :
   const [asked, setAsked] = useState([]);
   // State du popup :
