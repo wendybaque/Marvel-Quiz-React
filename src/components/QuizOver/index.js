@@ -1,8 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
+
 import { TiChevronRight } from 'react-icons/ti';
 import { FaAward } from 'react-icons/fa';
 import { BsHandThumbsDownFill } from 'react-icons/bs';
 import { BsFillHandThumbsUpFill } from 'react-icons/bs';
+
+import Loader from '../Loader';
 
 const QuizOver = React.forwardRef((props, ref) => {
 
@@ -77,8 +80,9 @@ const QuizOver = React.forwardRef((props, ref) => {
  ) : (
   <tr>  
     <td colSpan={3}>
-      <div className='loader'></div>
-      <p style={{textAlign:'center', color:'red'}}>On ne va pas te filer les bonnes réponses tout de suite, quand même ! 😜 <br/> Tu refais le niveau ? </p>
+      <Loader 
+        styling={{textAlign:'center', color:'red'}} 
+        loadingMsg={"On ne va pas te filer les bonnes réponses tout de suite, quand même ! 😜 <br/> Tu refais le niveau ?" }/>
     </td>
   </tr>
  )

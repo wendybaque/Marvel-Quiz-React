@@ -2,6 +2,7 @@ import React, {useState, Fragment, useContext, useEffect} from 'react';
 import {useNavigate } from 'react-router-dom'
 
 import {FirebaseContext} from '../Firebase';
+import Loader from '../Loader';
 import Logout from '../Logout';
 import Quiz from '../Quiz';
 
@@ -37,11 +38,11 @@ const Welcome = (props) => {
     }
   }, [userSession])
   
-
   return userSession === null ? (
-    <Fragment>
-      <div className='loader'></div>
-    </Fragment>
+      <Loader 
+        // loadingMsg={"Authentification en cours..."}
+        // styling={{textAlign:"center", color:"#FFFFFF"}}
+      />
   ) : (
     <div className='quiz-bg'>
         <div className='container'>
