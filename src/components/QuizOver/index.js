@@ -1,4 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { TiChevronRight } from 'react-icons/ti';
+import { FaAward } from 'react-icons/fa';
+import { BsHandThumbsDownFill } from 'react-icons/bs';
+import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 
 const QuizOver = React.forwardRef((props, ref) => {
 
@@ -28,13 +32,13 @@ const QuizOver = React.forwardRef((props, ref) => {
           quizLevel < levelNames.length ? (
             // Condition 1 : On a la moyenne et il reste des niveaux à faire :
           <Fragment>
-            <p className='successMsg'>Bravo, passez au niveau suivant ! 👏</p>
-            <button onClick={() => loadLevelQuestions(quizLevel)} className='btnResult success'>Niveau suivant...</button>
+            <p className='successMsg'>Bravo, passez au niveau suivant ! <BsFillHandThumbsUpFill /></p>
+            <button onClick={() => loadLevelQuestions(quizLevel)} className='btnResult success'>Niveau suivant... <TiChevronRight /></button>
           </Fragment>
           ) : (
             // Condition 2 : On  a la moyenne et on a terminé tous les niveaux :
           <Fragment>
-            <p className='successMsg'>Bravo, vous êtes un expert ! 🏆🏅</p>
+            <p className='successMsg'>Bravo, vous êtes un expert ! <FaAward size='50px'/></p>
             <button onClick={() => loadLevelQuestions(0)} className='btnResult gameOver'>Accueil</button>
           </Fragment>
           )
@@ -49,7 +53,7 @@ const QuizOver = React.forwardRef((props, ref) => {
     // Condition 3 : On n'a pas la moyenne, donc on ne peut pas passer au niveau suivant :
     <Fragment>
       <div className='setpsBtnContainer'>
-        <p className='failureMsg'>Dommage, vous avez échoué... 😟</p>
+        <p className='failureMsg'>Dommage, vous avez échoué... <BsHandThumbsDownFill /></p>
       </div>
 
       <div className='percentage'>

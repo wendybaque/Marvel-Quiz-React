@@ -3,19 +3,21 @@
 Application de quiz sur la thématique de Marvel, créée avec React pour suivre les exercices de [ce cours](https://www.udemy.com/course/formation-react-js-pour-tous/) sur React (section 11 : coder une application react de A à Z) sur la plateforme [Udemy](https://www.udemy.com/). 💻
 
 # Notions travaillées :
-* Routes et Route
-* Link et NavLink
-* useNavigate
-* Redirection programmée
-* Navigate avec replace
-* Gestion des routes inexistantes via une page d'erreur
-* Nested routes
-* Routes index
-* Récupérer la data de l'url
-* Récupérer la data d'une API (FakeJSON)
-* Paramêtres de requêtes
-* Lazy Loading routes
+* authentification, inscription, connexion et déconnexion via firebase
+* hookes : useEffect, useState, useContext, useNavigate, memo
+* composants et props
+* composants de type class et function
+* destructuring
+* fetch d'API
+* sécurité et Cloud firestore
+* déploiement sur firebase
 
-## Stylisée avec Bootsrap.
+# Package utilisés :
+* react-router-dom v6
+* firebase
+* react-toastify
+* react-stepper-horizontal
+* react-tooltip
+* react-icons
 
 Un grand merci au formateur [Donkey Geek](https://github.com/DonkeyGeek) ! 🙏

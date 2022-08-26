@@ -5,6 +5,8 @@ import QuizOver from '../QuizOver';
 import { QuizMarvel } from '../QuizMarvel';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { TbChevronRight } from 'react-icons/tb';
+import { TiChevronRight } from 'react-icons/ti';
 
 toast.configure();
 
@@ -179,7 +181,9 @@ class Quiz extends Component {
         <p key={index}
         onClick={() => this.submitAnswer(option)} 
         className={`answerOptions ${this.state.userAnswer === option ? "selected" : null}`}
-      >{option}</p>
+      >
+        <TbChevronRight />
+        {option}</p>
       )
     })
 
@@ -216,6 +220,7 @@ class Quiz extends Component {
           className='btnSubmit'
           onClick={this.nextQuestion}
         >
+          <TiChevronRight />
           
           {/* Affichage du bouton : texte change à la dernière question : */}
             {this.state.idQuestion < this.state.maxQuestions - 1 ? "Suivant" : "Terminé !"}
