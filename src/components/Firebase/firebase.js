@@ -9,14 +9,14 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const config = {
-    apiKey: "AIzaSyDunfHnc774WXwoAhyaFw2HPHT8XLzx8Ac",
-    authDomain: "marvel-quiz-91110.firebaseapp.com",
-    projectId: "marvel-quiz-91110",
-    storageBucket: "marvel-quiz-91110.appspot.com",
-    messagingSenderId: "577754321072",
-    appId: "1:577754321072:web:3988737be374bdd5bbab75",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
     // ID pour Analytics 
-    measurementId: "G-PX1LMNM9E0"
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
 
 // Firebase 9 :
