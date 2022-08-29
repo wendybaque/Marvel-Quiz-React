@@ -20,4 +20,6 @@ Application de quiz sur la thématique de Marvel, créée avec React pour suivre
 * react-tooltip
 * react-icons
 
+## Voir le [site déployé](https://marvel-quiz-91110.web.app/) sur Firebase et commencer à jouer !
+
 Un grand merci au formateur [Donkey Geek](https://github.com/DonkeyGeek) ! 🙏
